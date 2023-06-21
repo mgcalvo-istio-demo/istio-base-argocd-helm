@@ -37,9 +37,10 @@ spec:
         jsonPointers:
         - /imagePullSecrets
         - /secrets
-      - kind: ValidatingWebhookConfiguration
+      - group: admissionregistration.k8s.io
+        kind: ValidatingWebhookConfiguration
         jsonPointers:
-        - /webhooks/0/failurePolicy
+          - /webhooks/0/failurePolicy
       project: istio-system
       source:
         helm:
