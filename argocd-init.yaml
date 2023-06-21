@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: istio-system
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  description: istio
+  destinations:
+  - namespace: '*'
+    server: '*'
+  sourceRepos:
+  - '*'
+
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: istio-base
+  namespace: argocd
+spec:
+  generators:
+  - clusters: {}
+  template:
+    metadata:
+      name: istio-base
+    spec:
+      destination:
+        namespace: istio-system
+        server: https://kubernetes.default.svc
+      ignoreDifferences:
+      - jsonPointers:
+        - /imagePullSecrets
+        - /secrets
+        kind: ServiceAccount
+      project: istio-system
+      source:
+        helm:
+          valueFiles:
+          - values.yaml
+        path: .
+        repoURL: https://github.com/mgcalvo-istio-demo/istio-base-argocd-helm.git
+        targetRevision: master
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - Replace=false
+        - PruneLast=true
+        - CreateNamespace=true
