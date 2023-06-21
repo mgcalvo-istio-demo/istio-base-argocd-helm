@@ -39,7 +39,7 @@ spec:
         - /secrets
       - kind: ValidatingWebhookConfiguration
         jsonPointers:
-        - /webhooks/failurePolicy
+        - /webhooks/0/failurePolicy
       project: istio-system
       source:
         helm:
