@@ -41,10 +41,10 @@ spec:
       source:
         helm:
           valueFiles:
-          - values.yaml
+          - values-base.yaml
         path: .
         repoURL: https://github.com/mgcalvo-istio-demo/istio-base-argocd-helm.git
-        targetRevision: master
+        targetRevision: main
       syncPolicy:
         automated:
           prune: true
