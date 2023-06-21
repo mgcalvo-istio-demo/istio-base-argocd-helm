@@ -33,10 +33,13 @@ spec:
         namespace: istio-system
         server: https://kubernetes.default.svc
       ignoreDifferences:
-      - jsonPointers:
+      - kind: ServiceAccount
+        jsonPointers:
         - /imagePullSecrets
         - /secrets
-        kind: ServiceAccount
+      - kind: ValidatingWebhookConfiguration
+        jsonPointers:
+        - /webhooks/failurePolicy
       project: istio-system
       source:
         helm:
